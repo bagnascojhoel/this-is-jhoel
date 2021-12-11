@@ -2,7 +2,9 @@
   import * as source from '@assets/icons/index';
 
   export let name: string;
-  export let tailwindSize: number = 5;
+  export let htmlClass: string = 'fill-white';
+  export let size: number = 36;
+  export let viewBox: string = null;
 
   $: fixedName = fixName(name);
 
@@ -18,6 +20,7 @@
 
 <svelte:component
   this={source[fixedName]}
-  class={`w-${tailwindSize} h-${tailwindSize}`}
-  {...$$props}
+  class={htmlClass}
+  width={size}
+  heigth={size}
 />
