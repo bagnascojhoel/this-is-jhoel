@@ -9,17 +9,18 @@
 
 <main
   class="
-    h-screen 
-    w-screen 
+    min-h-screen 
+    min-w-screen 
+    pt-32 md:pt-48 lg:pt-60 2xl:pt-72
+    pb-16
     relative
     bg-gradient-to-br 
     from-gray-900 
     to-gray-500
-    overflow-scroll
     "
 >
   <h1
-    class="my-32 md:my-48 lg:my-60 2xl:my-72 px-6 leading-relaxed font-mono text-gray-50 text-4xl lg:text-5xl 2xl:text-7xl font-bold text-center"
+    class="mb-32 md:mb-48 lg:mb-60 2xl:mb-72 px-6 leading-relaxed font-mono text-gray-50 text-4xl lg:text-5xl 2xl:text-7xl font-bold text-center"
   >
     Hello there! <br />I am Jhoel, a brazilian Software Developer
   </h1>
@@ -36,7 +37,7 @@
     These are some of the projects I have been working on
   </h2>
 
-  <div
+  <section
     class="container mx-auto mt-10 2xl:mt-20 px-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 place-items-stretch"
   >
     <Card
@@ -55,9 +56,9 @@
       websiteUrl="http://localhost:5000/"
       tags={['front-end', 'svelte', 'tailwindcss']}
     />
-  </div>
+  </section>
 
-  <div class="my-16">
+  <section class="mt-16">
     <h3
       class="text-xl lg:text-2xl 2xl:text-4xl text-center text-white font-bold "
     >
@@ -81,5 +82,11 @@
         </a>
       </li>
     </ul>
-  </div>
+  </section>
 </main>
+
+<footer class="py-2 flex justify-center relative bg-orange-600">
+  <p class="text-white text-base 2xl:text-xl">
+    made with <Icon name="coffee" size={16} class="mx-1" /> by me
+  </p>
+</footer>

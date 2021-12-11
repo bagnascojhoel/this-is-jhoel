@@ -23,11 +23,11 @@
     <div class="grid gap-3 col-start-2 grid-flow-col-dense">
       {#if websiteUrl}
         <a href={websiteUrl}>
-          <Icon name="out-link" size={24} htmlClass="fill-yellow-300" />
+          <Icon name="out-link" size={24} class="fill-yellow-300" />
         </a>
       {/if}
       <a href={githubUrl}>
-        <Icon name="github" size={24} htmlClass="fill-yellow-300" />
+        <Icon name="github" size={24} class="fill-yellow-300" />
       </a>
     </div>
   </div>

@@ -2,9 +2,7 @@
   import * as source from '@assets/icons/index';
 
   export let name: string;
-  export let htmlClass: string = 'fill-white';
   export let size: number = 36;
-  export let viewBox: string = null;
 
   $: fixedName = fixName(name);
 
@@ -20,7 +18,8 @@
 
 <svelte:component
   this={source[fixedName]}
-  class={htmlClass}
+  class={`inline-block ${$$props.class}`}
+  fill="white"
   width={size}
   heigth={size}
 />
