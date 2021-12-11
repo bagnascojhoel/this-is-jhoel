@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "watch:local": "APP_ENV=local rollup -c -w",
+    "watch:prod": "APP_ENV=production rollup -c -w",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
@@ -15,6 +17,7 @@
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^2.0.0",
     "autoprefixer": "^10.4.0",
+    "dotenv": "^10.0.0",
     "node-sass": "^7.0.0",
     "postcss": "^8.4.4",
     "prettier-plugin-svelte": "^2.5.1",

@@ -1,14 +1,23 @@
-import svelte from 'rollup-plugin-svelte';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import livereload from 'rollup-plugin-livereload';
-import { terser } from 'rollup-plugin-terser';
-import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
-import css from 'rollup-plugin-css-only';
 import alias from '@rollup/plugin-alias';
 
-const production = !process.env.ROLLUP_WATCH;
+import svelte from 'rollup-plugin-svelte';
+import livereload from 'rollup-plugin-livereload';
+import { terser } from 'rollup-plugin-terser';
+import css from 'rollup-plugin-css-only';
+
+import sveltePreprocess from 'svelte-preprocess';
+import dotenv from 'dotenv';
+
+const __app = {
+  version: process.env.npm_package_version,
+  env: {
+    isProd: !process.env.ROLLUP_WATCH && process.env.APP_ENV === 'production',
+    ...dotenv.config({ path: `env/${process.env.APP_ENV}.env` }).parsed,
+  },
+};
 
 function serve() {
   let server;
@@ -46,14 +55,17 @@ export default {
   plugins: [
     svelte({
       preprocess: sveltePreprocess({
-        sourceMap: !production,
+        sourceMap: !__app.env.isProd,
+        // Configure Postcss
         postcss: {
           plugins: [require('tailwindcss'), require('autoprefixer')],
         },
+        // Allow usage of __app on code
+        replace: [['__app', JSON.stringify(__app)]],
       }),
       compilerOptions: {
         // enable run-time checks when not in production
-        dev: !production,
+        dev: !__app.env.isProd,
       },
     }),
     // we'll extract any component CSS out into
@@ -71,9 +83,11 @@ export default {
     }),
     commonjs(),
     typescript({
-      sourceMap: !production,
-      inlineSources: !production,
+      sourceMap: !__app.env.isProd,
+      inlineSources: !__app.env.isProd,
     }),
+
+    // Path aliases
     alias({
       entries: [
         { find: '@components', replacement: 'src/components' },
@@ -85,15 +99,15 @@ export default {
 
     // In dev mode, call `npm run start` once
     // the bundle has been generated
-    !production && serve(),
+    !__app.env.isProd && serve(),
 
     // Watch the `public` directory and refresh the
-    // browser on changes when not in production
-    !production && livereload('public'),
+    // browser on changes when not in __app.env.isProd
+    !__app.env.isProd && livereload('public'),
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
-    production && terser(),
+    __app.env.isProd && terser(),
   ],
   watch: {
     clearScreen: false,
