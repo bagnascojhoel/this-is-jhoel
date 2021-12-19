@@ -13,7 +13,7 @@
     <ul class="flex flex-row flex-wrap">
       {#each tags as tag}
         <li
-          class="mb-2 mr-2 px-2 bg-yellow-300 rounded-full 2xl:text-xl font-mono text-gray-600 font-bold"
+          class="mb-2 mr-2 px-2 bg-yellow-300 rounded-full font-mono  text-sm text-gray-600 font-bold"
         >
           {tag}
         </li>
@@ -32,8 +32,8 @@
     </div>
   </div>
 
-  <h3 class="mt-6 text-2xl lg:text-4xl text-white font-mono font-bold">
+  <h3 class="mt-6 text-xl text-white font-mono font-bold">
     {title}
   </h3>
-  <p class="mt-3 text-base 2xl:text-2xl font-sans text-white">{description}</p>
+  <p class="mt-3 text-base font-sans text-white">{description}</p>
 </div>

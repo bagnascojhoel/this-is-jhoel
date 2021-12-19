@@ -20,9 +20,25 @@
     "
 >
   <h1
-    class="mb-32 md:mb-48 lg:mb-60 2xl:mb-72 px-6 leading-relaxed font-mono text-gray-50 text-4xl lg:text-5xl 2xl:text-7xl font-bold text-center"
+    class="
+    xl:w-3/6
+    lg:w-4/6
+    lg:m-auto 
+    mb-32 
+    md:mb-48 
+    lg:mb-60 
+    2xl:mb-72 
+    px-6 
+    leading-relaxed 
+    font-mono 
+    text-gray-50 
+    text-4xl 
+    lg:text-5xl 
+    font-bold 
+    text-center
+    "
   >
-    Hello there! <br />I am Jhoel, a brazilian Software Developer
+    Hello there! <br /><br/>I am Jhoel, a brazilian Software Developer
   </h1>
 
   <div class="flex flex-row justify-center">
@@ -32,19 +48,14 @@
   </div>
 
   <h2
-    class="px-6 mt-20 2xl:mt-36 font-mono text-white text-xl lg:text-3xl 2xl:text-5xl font-bold text-center"
+    class="mt-20 px-6 font-mono text-white text-2xl lg:text-3xl font-bold text-center"
   >
     These are some of the projects I have been working on
   </h2>
 
   <section
-    class="container mx-auto mt-10 2xl:mt-20 px-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 place-items-stretch"
+    class="container mx-auto mt-10 px-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 place-items-stretch"
   >
-    <Card
-      title="This Is Jhoel"
-      {description}
-      tags={['front-end', 'svelte', 'tailwindcss']}
-    />
     <Card
       title="This Is Jhoel"
       {description}
@@ -58,9 +69,9 @@
     />
   </section>
 
-  <section class="mt-16">
+  <section class="mt-40">
     <h3
-      class="text-xl lg:text-2xl 2xl:text-4xl text-center text-white font-bold "
+      class="text-xl lg:text-2xl text-center text-white font-bold font-mono"
     >
       If you want to contact me, here :)
     </h3>
@@ -85,8 +96,8 @@
   </section>
 </main>
 
-<footer class="py-2 flex justify-center relative bg-orange-600">
-  <p class="text-white text-base 2xl:text-xl">
+<footer class="py-1 flex justify-center relative bg-orange-600">
+  <p class="text-white text-sm font-mono">
     made with <Icon name="coffee" size={16} class="mx-1" /> by me
   </p>
 </footer>
