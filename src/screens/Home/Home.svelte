@@ -1,5 +1,14 @@
 <script>
+  import { onMount } from 'svelte';
+
   import { Card, Icon } from '@components';
+  import { GithubApi } from '@data';
+
+  onMount(async () => {
+    const userData = await GithubApi.findMyData();
+    console.log(userData);
+  });
+
   const description = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis metus morbi sit phasellus lectus aliquam pellentesque. Tempor neque sed augue eget posuere aliquet. Rhoncus, nisi pellentesque egestas lacinia facilisi ut enim, egestas pulvinar. Purus, sagittis nibh tincidunt sit tempus.`;
   const myEmail = 'bagnascojhoel@gmail.com';
   const myGithub = 'https://github.com/bagnascojhoel';
@@ -38,7 +47,7 @@
     text-center
     "
   >
-    Hello there! <br /><br/>I am Jhoel, a brazilian Software Developer
+    Hello there! <br /><br />I am Jhoel, a brazilian Software Developer
   </h1>
 
   <div class="flex flex-row justify-center">
@@ -70,9 +79,7 @@
   </section>
 
   <section class="mt-40">
-    <h3
-      class="text-xl lg:text-2xl text-center text-white font-bold font-mono"
-    >
+    <h3 class="text-xl lg:text-2xl text-center text-white font-bold font-mono">
       If you want to contact me, here :)
     </h3>
 
