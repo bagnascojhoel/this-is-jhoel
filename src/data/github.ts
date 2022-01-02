@@ -1,12 +1,15 @@
-const axios = require('axios');
+import { Api } from './api';
+import { GithubApiErrorStore } from '@stores';
 
-const api = axios.create({
-  headers: {
-    authorization: `bagnascojhoel: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`,
+const api = new Api({
+  errorHandler: GithubApiErrorStore,
+  baseURL: process.env.GITHUB_URL,
+  auth: {
+    username: process.env.GITHUB_USERNAME,
+    password: process.env.GITHUB_PERSONAL_TOKEN,
   },
-  baseURL: 'https://api.github.com',
 });
 
-export function* findMyData() {
-  yield api.get('/user');
+export async function findMyData() {
+  return await api.get('/user');
 }

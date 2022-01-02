@@ -1,12 +1,8 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
-const env = process.env;
 module.exports = {
-  purge: {
-    content: ['./src/**/*.svelte'],
-    enabled: env === 'production',
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: ['./public/index.html', './public/global.css', './src/**/*.svelte'],
+  media: false,
   theme: {
     fontFamily: {
       mono: ['"Fira Code"', ...defaultTheme.fontFamily['mono']],

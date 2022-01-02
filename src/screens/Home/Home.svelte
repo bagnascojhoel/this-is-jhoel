@@ -1,14 +1,18 @@
 <script>
   import { onMount } from 'svelte';
-
   import { Card, Icon } from '@components';
   import { GithubApi } from '@data';
 
-  onMount(async () => {
-    const userData = await GithubApi.findMyData();
-    console.log(userData);
-  });
+  let user = null;
 
+  async function fetchMyData() {
+    const userData = await GithubApi.findMyData();
+    user = userData;
+  }
+
+  onMount(async () => {
+    await fetchMyData();
+  });
   const description = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis metus morbi sit phasellus lectus aliquam pellentesque. Tempor neque sed augue eget posuere aliquet. Rhoncus, nisi pellentesque egestas lacinia facilisi ut enim, egestas pulvinar. Purus, sagittis nibh tincidunt sit tempus.`;
   const myEmail = 'bagnascojhoel@gmail.com';
   const myGithub = 'https://github.com/bagnascojhoel';
