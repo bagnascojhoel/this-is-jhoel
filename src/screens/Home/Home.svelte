@@ -3,21 +3,50 @@
   import { Card, Icon } from '@components';
   import { GithubApi } from '@data';
 
-  let user = null;
-
-  async function fetchMyData() {
-    const userData = await GithubApi.findMyData();
-    user = userData;
-  }
-
-  onMount(async () => {
-    await fetchMyData();
-  });
-  const description = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis metus morbi sit phasellus lectus aliquam pellentesque. Tempor neque sed augue eget posuere aliquet. Rhoncus, nisi pellentesque egestas lacinia facilisi ut enim, egestas pulvinar. Purus, sagittis nibh tincidunt sit tempus.`;
   const myEmail = 'bagnascojhoel@gmail.com';
   const myGithub = 'https://github.com/bagnascojhoel';
   const myLinkedin = 'https://www.linkedin.com/in/jhoel-galeano';
   const emailSubject = "Hey! I'm sending this from your website!";
+
+  let projects = [];
+
+  async function mapToProjects(repositories) {
+    const allProjects = await Promise.all(
+      repositories.map(async (repo) => {
+        let result = null;
+        try {
+          result = await GithubApi.findRepositoryDescription(
+            repo.owner.login,
+            repo.name,
+            { useGlobalErrorHandler: false }
+          );
+        } catch (err) {}
+
+        if (result) {
+          result = JSON.parse(atob(result.content));
+          result.githubUrl = repo.html_url;
+        }
+
+        return result;
+      })
+    );
+
+    return allProjects;
+  }
+
+  async function findMyPortfolio() {
+    const publicRepositories = await GithubApi.findMyRepositories({
+      visibility: 'public',
+    });
+
+    projects = (await mapToProjects(publicRepositories)).filter(
+      (project) => !!project
+    );
+  }
+
+  onMount(async () => {
+    await findMyPortfolio();
+  });
 </script>
 
 <main
@@ -66,21 +95,29 @@
     These are some of the projects I have been working on
   </h2>
 
-  <section
-    class="container mx-auto mt-10 px-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 place-items-stretch"
-  >
-    <Card
-      title="This Is Jhoel"
-      {description}
-      tags={['front-end', 'svelte', 'tailwindcss']}
-    />
-    <Card
-      {description}
-      title="This Is Jhoel"
-      websiteUrl="http://localhost:5000/"
-      tags={['front-end', 'svelte', 'tailwindcss']}
-    />
-  </section>
+  {#if projects.length === 0}
+    <div class="mt-10 flex justify-center items-center">
+      <div
+        class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-l-transparent"
+        role="status"
+      >
+        <span class="invisible">Loading...</span>
+      </div>
+    </div>
+  {:else}
+    <section
+      class="container mx-auto mt-10 px-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 place-items-stretch"
+    >
+      {#each projects as project}
+        <Card
+          githubUrl={project.githubUrl}
+          title={project.title}
+          description={project.description}
+          tags={project.tags}
+        />
+      {/each}
+    </section>
+  {/if}
 
   <section class="mt-40">
     <h3 class="text-xl lg:text-2xl text-center text-white font-bold font-mono">

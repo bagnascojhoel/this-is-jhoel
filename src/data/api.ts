@@ -35,7 +35,7 @@ export class Api {
 
   async #request(method: Method, path: string, config?: RequestConfig) {
     const actualConfig = { ...new DefaultRequestConfig(), ...config };
-    console.log(actualConfig);
+
     try {
       const response = await this.axios.request({
         method,
