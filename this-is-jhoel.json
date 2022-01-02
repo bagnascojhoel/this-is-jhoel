@@ -1,4 +1,5 @@
 {
   "title": "This is Jhoel",
-  "briefing": "LOREM IPSUM"
+  "tags": ["front-end", "svelte", "tailwindcss"],
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis metus morbi sit phasellus lectus aliquam pellentesque. Tempor neque sed augue eget posuere aliquet. Rhoncus, nisi pellentesque egestas lacinia facilisi ut enim, egestas pulvinar. Purus, sagittis nibh tincidunt sit tempus."
 }
