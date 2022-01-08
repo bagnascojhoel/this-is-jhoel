@@ -1,5 +1,5 @@
 {
   "title": "This is Jhoel",
-  "tags": ["front-end", "svelte", "tailwindcss"],
-  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis metus morbi sit phasellus lectus aliquam pellentesque. Tempor neque sed augue eget posuere aliquet. Rhoncus, nisi pellentesque egestas lacinia facilisi ut enim, egestas pulvinar. Purus, sagittis nibh tincidunt sit tempus."
+  "tags": ["front-end", "svelte", "tailwindcss", "github-api"],
+  "description": "This is my portfolio website. I wanted to learn another \"stack\", so I did it with Svelte and Tailwindcss. I tried to use rollup, but faced some issues when using Axios to fetch the projects from the Github API, so I settled for the good-old webpack."
 }
