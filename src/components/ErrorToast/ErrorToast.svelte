@@ -12,7 +12,6 @@
   }
 
   function setUp(newText) {
-    console.log('setUp with', newText);
     visible = true;
     text = newText;
   }

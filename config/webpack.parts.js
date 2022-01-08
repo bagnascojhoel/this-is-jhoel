@@ -23,7 +23,7 @@ exports.devServer = () => ({
 });
 
 exports.page = ({ title }) => ({
-  plugins: [new MiniHtmlWebpackPlugin({ publicPath: '/', context: { title } })],
+  plugins: [new MiniHtmlWebpackPlugin({ publicPath: '', context: { title } })],
 });
 
 exports.generateSourceMaps = ({ type }) => ({ devtool: type });
