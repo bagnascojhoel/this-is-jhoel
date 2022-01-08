@@ -5,7 +5,6 @@ import type { ApiErrorHandler, ApiConfig, RequestConfig } from './api.d';
 
 class DefaultRequestConfig implements RequestConfig {
   useGlobalErrorHandler?: boolean = true;
-  isReturnOnlyData?: boolean = true;
 }
 
 export class Api {
@@ -37,13 +36,11 @@ export class Api {
     const actualConfig = { ...new DefaultRequestConfig(), ...config };
 
     try {
-      const response = await this.axios.request({
+      return await this.axios.request({
         method,
         url: path,
         ...actualConfig,
       });
-
-      return actualConfig.isReturnOnlyData ? response.data : response;
     } catch (error) {
       if (actualConfig.useGlobalErrorHandler) {
         this.errorHandler.handle(error);

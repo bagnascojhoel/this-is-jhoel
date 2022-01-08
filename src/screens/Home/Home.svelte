@@ -1,7 +1,14 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
   import { Card, Icon } from '@components';
-  import { GithubApi } from '@data';
+  import { GithubApi, HttpStatus } from '@data';
+
+  const INTRO_TEXT = 'Hello there! I am Jhoel, a brazilian Software Developer';
+  const PROJECTS_SECTION_TITLE =
+    "These are some of the projects I've been working on";
+  const CONTACT_SECTION_TITLE = 'If you would like to contact me :)';
+  const AUTHOR_FOOTER_BEFORE_ICON = 'made with';
+  const AUTHOR_FOOTER_AFTER_ICON = 'by me';
 
   const myEmail = 'bagnascojhoel@gmail.com';
   const myGithub = 'https://github.com/bagnascojhoel';
@@ -10,38 +17,40 @@
 
   let projects = [];
 
-  async function mapToProjects(repositories) {
-    const allProjects = await Promise.all(
-      repositories.map(async (repo) => {
-        let result = null;
-        try {
-          result = await GithubApi.findRepositoryDescription(
-            repo.owner.login,
-            repo.name,
-            { useGlobalErrorHandler: false }
-          );
-        } catch (err) {}
+  $: isLoading = projects.length === 0;
 
-        if (result) {
-          result = JSON.parse(atob(result.content));
-          result.githubUrl = repo.html_url;
-        }
+  async function* findProjects(repositories) {
+    for (const aRepository of repositories) {
+      let response = null;
+      try {
+        response = await GithubApi.findMyRepositoryDescription(
+          aRepository.name,
+          { useGlobalErrorHandler: false }
+        );
+      } catch (error) {
+        if (error.response.status === HttpStatus.NOT_FOUND) continue;
+        else throw error;
+      }
 
-        return result;
-      })
-    );
-
-    return allProjects;
+      const description = JSON.parse(atob(response.data.content));
+      description.githubUrl = aRepository.html_url;
+      yield description;
+    }
   }
 
   async function findMyPortfolio() {
-    const publicRepositories = await GithubApi.findMyRepositories({
-      visibility: 'public',
-    });
+    const repositories = (await GithubApi.findMyPublicRepositories()).data;
+    const projectsFoundIterator = findProjects(repositories);
 
-    projects = (await mapToProjects(publicRepositories)).filter(
-      (project) => !!project
-    );
+    let hasNext = true;
+    while (hasNext) {
+      const { done, value } = await projectsFoundIterator.next();
+      hasNext = !done;
+
+      if (value) {
+        projects = [...projects, value];
+      }
+    }
   }
 
   onMount(async () => {
@@ -80,7 +89,7 @@
     text-center
     "
   >
-    Hello there! <br /><br />I am Jhoel, a brazilian Software Developer
+    {INTRO_TEXT}
   </h1>
 
   <div class="flex flex-row justify-center">
@@ -92,10 +101,10 @@
   <h2
     class="mt-20 px-6 font-mono text-white text-2xl lg:text-3xl font-bold text-center"
   >
-    These are some of the projects I have been working on
+    {PROJECTS_SECTION_TITLE}
   </h2>
 
-  {#if projects.length === 0}
+  {#if isLoading}
     <div class="mt-10 flex justify-center items-center">
       <div
         class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-l-transparent"
@@ -121,7 +130,7 @@
 
   <section class="mt-40">
     <h3 class="text-xl lg:text-2xl text-center text-white font-bold font-mono">
-      If you want to contact me, here :)
+      {CONTACT_SECTION_TITLE}
     </h3>
 
     <ul class="mt-7 flex flex-row justify-center">
@@ -146,6 +155,8 @@
 
 <footer class="py-1 flex justify-center relative bg-orange-600">
   <p class="text-white text-sm font-mono">
-    made with <Icon name="coffee" size={16} class="mx-1" /> by me
+    {AUTHOR_FOOTER_BEFORE_ICON}
+    <Icon name="coffee" size={16} class="mx-1" />
+    {AUTHOR_FOOTER_AFTER_ICON}
   </p>
 </footer>

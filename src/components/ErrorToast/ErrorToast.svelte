@@ -7,8 +7,6 @@
   let visible: boolean = false;
 
   function tearDown() {
-    console.log('tearDown');
-
     visible = false;
     text = null;
   }

@@ -8,9 +8,7 @@ export interface ApiErrorHandler {
 
 export interface RequestConfig extends AxiosRequestConfig {
   useGlobalErrorHandler?: boolean;
-  isReturnOnlyData?: boolean;
 }
-
 export interface ApiConfig extends AxiosRequestConfig {
   errorHandler?: ApiErrorHandler;
 }
