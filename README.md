@@ -2,6 +2,17 @@
 
 My personal portfolio website. The cards are built with information gathered from my public repositories on GitHub. Each project has its own description file, called `this-is-jhoel.json`. It is published with GitHub Pages.
 
+## Description file template
+
+```json
+{
+  "title": "This is Jhoel",
+  "tags": ["front-end", "svelte"],
+  "description": "My description"
+}
+
+```
+
 ## Technologies
 
 Since the project premisse was a simple website to showcase my projects, I chooose technologies which allowed me a fast development and cheap deployment:
