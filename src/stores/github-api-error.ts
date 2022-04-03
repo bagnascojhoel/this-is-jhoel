@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import type { Writable, Subscriber, Unsubscriber } from 'svelte/store';
 
-import type { ApiErrorHandler, ApiError } from '@data';
+import type { ApiErrorHandler, ApiError } from '@types';
 
 class GithubApiErrorStore implements ApiErrorHandler {
   #store: Writable<string> = null;

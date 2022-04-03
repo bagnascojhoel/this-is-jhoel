@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosInstance, Method } from 'axios';
 
-import type { ApiErrorHandler, ApiConfig, RequestConfig } from './api.d';
+import type { ApiErrorHandler, ApiConfig, RequestConfig } from '@types';
 
 class DefaultRequestConfig implements RequestConfig {
   useGlobalErrorHandler?: boolean = true;

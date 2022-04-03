@@ -1,4 +1,3 @@
-import type { RequestConfig } from './api.d';
 import { Api } from './api';
 import { GithubApiErrorStore } from '@stores';
 
