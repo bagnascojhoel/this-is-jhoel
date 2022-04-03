@@ -23,12 +23,8 @@ export async function findMyPublicRepositories(params?: { perPage: number }) {
   );
 }
 
-export async function findMyRepositoryDescription(
-  repo: string,
-  config?: RequestConfig
-) {
-  return api.get(
-    `/repos/${USERNAME}/${repo}/contents/${DESCRIPTION_FILE}`,
-    config
-  );
+export async function findMyRepositoryDescription(repo: string) {
+  return api.get(`/repos/${USERNAME}/${repo}/contents/${DESCRIPTION_FILE}`, {
+    useGlobalErrorHandler: false,
+  });
 }

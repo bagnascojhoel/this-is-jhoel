@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
+import type { AxiosInstance, Method } from 'axios';
 
 import type { ApiErrorHandler, ApiConfig, RequestConfig } from './api.d';
 

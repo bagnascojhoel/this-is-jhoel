@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Card, Icon } from '@components';
-  import { GithubApi, HttpStatus } from '@data';
+  import { GithubService } from '@services';
+  import type { Project } from '@types';
 
   const INTRO_TEXT = 'Hello there! I am Jhoel, a brazilian Software Developer';
   const PROJECTS_SECTION_TITLE =
@@ -15,53 +16,25 @@
   const myLinkedin = 'https://www.linkedin.com/in/jhoel-galeano';
   const emailSubject = "Hey! I'm sending this from your website!";
 
-  let projects = [];
+  let projects: Project[] = [];
 
   $: isLoading = projects.length === 0;
 
-  async function* findProjects(repositories) {
-    for (const aRepository of repositories) {
-      let response = null;
-      try {
-        response = await GithubApi.findMyRepositoryDescription(
-          aRepository.name,
-          { useGlobalErrorHandler: false }
-        );
-      } catch (error) {
-        if (error.response.status === HttpStatus.NOT_FOUND) continue;
-        else throw error;
-      }
-
-      const description = JSON.parse(atob(response.data.content));
-      description.githubUrl = aRepository.html_url;
-      yield description;
-    }
-  }
-
-  async function findMyPortfolio() {
-    const repositories = (await GithubApi.findMyPublicRepositories()).data;
-    const projectsFoundIterator = findProjects(repositories);
-
-    let hasNext = true;
-    while (hasNext) {
-      const { done, value } = await projectsFoundIterator.next();
-      hasNext = !done;
-
-      if (value) {
-        projects = [...projects, value];
-      }
-    }
-  }
-
   onMount(async () => {
-    await findMyPortfolio();
+    const portfolioIterator = GithubService.findMyPortfolio();
+
+    let hasNext: boolean = true;
+    do {
+      let { done, value } = await portfolioIterator.next();
+      hasNext = !done;
+      projects = value;
+    } while (hasNext);
   });
 </script>
 
 <main
   class="
-    min-h-screen 
-    min-w-screen 
+    min-h-screen
     pt-32 md:pt-48 lg:pt-60 2xl:pt-72
     pb-16
     relative
@@ -123,6 +96,7 @@
           title={project.title}
           description={project.description}
           tags={project.tags}
+          websiteUrl={project.websiteUrl}
         />
       {/each}
     </section>

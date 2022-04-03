@@ -7,9 +7,10 @@
     "paths": {
       "@components": ["components"],
       "@screens": ["screens"],
-      "@data": ["data"],
       "@assets/*": ["assets/*"],
-      "@stores": ["stores"]
+      "@stores": ["stores"],
+      "@services": ["services"],
+      "@types": ["types"]
     }
   }
 }

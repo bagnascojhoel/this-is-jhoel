@@ -11,12 +11,14 @@ const DotenvPlugin = require('dotenv-webpack');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+exports.STATIC_FILES_PATH = path.resolve(process.cwd(), 'docs');
+
 exports.devServer = () => ({
   watch: true,
   plugins: [
     new WebpackPluginServe({
       port: 3000,
-      static: path.resolve(process.cwd(), 'dist'),
+      static: this.STATIC_FILES_PATH,
       historyFallback: true,
     }),
   ],
@@ -144,7 +146,7 @@ exports.esbuild = () => {
           test: /\.js$/,
           loader: 'esbuild-loader',
           options: {
-            target: 'es2015',
+            target: 'esnext',
           },
         },
         {
@@ -152,7 +154,7 @@ exports.esbuild = () => {
           loader: 'esbuild-loader',
           options: {
             loader: 'ts',
-            target: 'es2015',
+            target: 'esnext',
           },
         },
       ],

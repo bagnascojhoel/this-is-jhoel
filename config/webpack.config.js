@@ -1,10 +1,9 @@
-const path = require('path');
 const { merge } = require('webpack-merge');
 const parts = require('./webpack.parts');
 const { mode, analyze, env } = require('webpack-nano/argv');
 
 const common = merge([
-  { output: { path: path.resolve(process.cwd(), 'docs') } },
+  { output: { path: parts.STATIC_FILES_PATH } },
   parts.page({ title: 'This is Jhoel' }),
   parts.loadSvg(),
   parts.svelte(mode),
